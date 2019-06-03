@@ -7,17 +7,19 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 
 public class Gameplay extends JPanel implements KeyListener,ActionListener{
-    private int[] snakeXpos = new int[750];
-    private int[] snakeYpos = new int[750];
-    private boolean left= false;
+	private boolean left= false;
     private boolean right= false;
     private boolean up= false;
     private boolean down= false;
 
+	private int[] snakeXpos = new int[750];
+    private int[] snakeYpos = new int[750];
+
+
 
     private int numDots = 3;
     int keystrokes = 0;
-    private int points;
+
 
     private int[] newdotXpos = {25,50,75,100,125,150,175,200,225,250,275,300,325,350,375,400,425,450,475,500,525,550,575,600,625,650,675,700,725,750,775,800,825,850};
     private int[] newdotYpos = {75,100,125,150,175,200,225,250,275,300,325,350,375,400,425,450,475,500,525,550,575,600,625};
@@ -32,7 +34,7 @@ public class Gameplay extends JPanel implements KeyListener,ActionListener{
 
     private ImageIcon snakeimage;
 
-    private ImageIcon titleImage;
+   
 
     public Gameplay(){
         addKeyListener(this);
@@ -52,24 +54,24 @@ public class Gameplay extends JPanel implements KeyListener,ActionListener{
             snakeYpos[0] = 100;
         }
 
-        //draw title image border
+       
         p.setColor(Color.BLACK);
         p.drawRect(24,10,851,55);
 
        
-        //draw border for palying area
+   
         p.setColor(Color.white);
         p.drawRect(24,74,851,577);
 
-        p.setColor(Color.MAGENTA);
+        p.setColor(Color.white);
         p.fillRect(24,75,850,575);
 
-        //draw points
+    
         p.setColor(Color.BLACK);
         p.setFont(new Font("arial",Font.PLAIN, 36));
         p.drawString("Snakey Game",330,50);
 
-        // draw length of snake
+       
         p.setColor(Color.BLUE);
         p.setFont(new Font("arial",Font.PLAIN, 30));
         p.drawString("Length: " +numDots,700,50);
@@ -86,7 +88,7 @@ public class Gameplay extends JPanel implements KeyListener,ActionListener{
         }
         availableDots = new ImageIcon("enemy.png");
         if (newdotXpos[xpos] == snakeXpos[0] && newdotYpos[ypos] == snakeYpos[0]){
-            points++;
+           
             numDots++;
             xpos = rand.nextInt(34);
             ypos = rand.nextInt(23);
@@ -152,11 +154,15 @@ public class Gameplay extends JPanel implements KeyListener,ActionListener{
             repaint();
 
         }
+        
         if (down){
-            for (int r = numDots-1;r>=0;r--){
+        	 int r = numDots-1;
+        	while (r>=0){
                 snakeXpos[r+1] = snakeXpos[r];
+                r--;
             }
-            for (int r = numDots;r>=0;r--){
+        	r = numDots;
+        	while (r>=0){
                 if (r ==0) {
                     snakeYpos[r] = snakeYpos[r] + 25;
                 }else{
@@ -165,6 +171,7 @@ public class Gameplay extends JPanel implements KeyListener,ActionListener{
                 if (snakeYpos[r] >625){
                     snakeYpos[r] =75;
                 }
+                r--;
             }
             repaint();
 
@@ -186,7 +193,7 @@ public class Gameplay extends JPanel implements KeyListener,ActionListener{
         if (e.getKeyCode() == KeyEvent.VK_SPACE){
             keystrokes =0;
             numDots=3;
-            points=0;
+            
         }
         if (e.getKeyCode() == KeyEvent.VK_D){
             keystrokes++;
